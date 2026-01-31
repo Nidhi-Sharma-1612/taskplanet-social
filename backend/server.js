@@ -1,21 +1,27 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
-import Post from "./models/Post.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
-
-// Connect DB
 connectDB();
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
 app.use(express.json());
+app.use(cookieParser());
 
-// Test route
+app.use("/api/auth", authRoutes);
+
 app.get("/", (req, res) => {
   res.send("TaskPlanet Social API is running 🚀");
 });
