@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
-  withCredentials: true, // 🔑 required for HTTP-only cookies
+  baseURL: "https://taskplanet-backend-4g9s.onrender.com/api",
+  withCredentials: true,
 });
 
 export default api;
