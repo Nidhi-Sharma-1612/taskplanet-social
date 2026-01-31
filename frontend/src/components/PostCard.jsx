@@ -13,6 +13,11 @@ import { useState } from "react";
 import api from "../services/api";
 import { useAuth } from "../context/useAuth";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+
 export default function PostCard({ post, onUpdate }) {
   const { user } = useAuth();
   const [comment, setComment] = useState("");
@@ -34,16 +39,39 @@ export default function PostCard({ post, onUpdate }) {
   return (
     <Paper sx={{ p: 2, mb: 2 }}>
       {/* Header */}
-      <Box display="flex" alignItems="center" mb={1}>
-        <Avatar sx={{ mr: 1 }}>{post.username[0].toUpperCase()}</Avatar>
-        <Typography fontWeight="bold">{post.username}</Typography>
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <Box display="flex" alignItems="center">
+          <Avatar sx={{ mr: 1 }}>{post.username[0].toUpperCase()}</Avatar>
+          <Box>
+            <Typography fontWeight="bold">{post.username}</Typography>
+            <Typography variant="caption" color="text.secondary">
+              {dayjs(post.createdAt).fromNow()}
+            </Typography>
+          </Box>
+        </Box>
       </Box>
 
-      {/* Content */}
-      <Typography sx={{ mb: 1 }}>{post.text}</Typography>
+      {/* Text Content */}
+      {post.text && <Typography sx={{ mt: 1 }}>{post.text}</Typography>}
+
+      {/* Image Content */}
+      {post.image && (
+        <Box mt={1}>
+          <img
+            src={post.image}
+            alt="post"
+            style={{
+              width: "100%",
+              borderRadius: 8,
+              maxHeight: 400,
+              objectFit: "cover",
+            }}
+          />
+        </Box>
+      )}
 
       {/* Actions */}
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" mt={1}>
         <IconButton onClick={likeHandler} color={liked ? "error" : "default"}>
           <FavoriteIcon />
         </IconButton>
