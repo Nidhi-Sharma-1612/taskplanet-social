@@ -80,3 +80,8 @@ export const logout = (req, res) => {
 
   res.json({ message: "Logged out successfully" });
 };
+
+// @route GET /api/auth/me
+export const getMe = async (req, res) => {
+  res.json(req.user);
+};
