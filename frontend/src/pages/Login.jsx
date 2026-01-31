@@ -3,6 +3,7 @@ import { Button, TextField, Typography, Box, Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/useAuth";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -51,6 +52,13 @@ export default function Login() {
             Login
           </Button>
         </form>
+
+        <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+          Don&apos;t have an account?{" "}
+          <Link to="/signup" style={{ textDecoration: "none" }}>
+            Sign up
+          </Link>
+        </Typography>
       </Paper>
     </Box>
   );
