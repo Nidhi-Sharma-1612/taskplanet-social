@@ -3,6 +3,7 @@ import CreatePost from "../components/CreatePost";
 import PostCard from "../components/PostCard";
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import Header from "../components/Header";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -34,18 +35,21 @@ export default function Feed() {
   }, []);
 
   return (
-    <Container maxWidth="sm">
-      <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
-        Social Feed
-      </Typography>
+    <>
+      <Header />
+      <Container maxWidth="sm">
+        <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
+          Social Feed
+        </Typography>
 
-      <CreatePost onPostCreated={fetchPosts} />
+        <CreatePost onPostCreated={fetchPosts} />
 
-      <Box mt={2}>
-        {posts.map((post) => (
-          <PostCard key={post._id} post={post} onUpdate={fetchPosts} />
-        ))}
-      </Box>
-    </Container>
+        <Box mt={2}>
+          {posts.map((post) => (
+            <PostCard key={post._id} post={post} onUpdate={fetchPosts} />
+          ))}
+        </Box>
+      </Container>
+    </>
   );
 }
