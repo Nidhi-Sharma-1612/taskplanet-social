@@ -2,6 +2,8 @@ import { Box, Button, Paper, TextField, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CloseIcon from "@mui/icons-material/Close";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CircularProgress from "@mui/material/CircularProgress";
 import api from "../services/api";
 
 export default function CreatePost({ onPostCreated }) {
@@ -118,8 +120,19 @@ export default function CreatePost({ onPostCreated }) {
           />
         </IconButton>
 
-        <Button variant="contained" onClick={submitHandler} disabled={loading}>
-          Post
+        <Button
+          variant="contained"
+          onClick={submitHandler}
+          disabled={loading}
+          endIcon={
+            loading ? (
+              <CircularProgress size={18} color="inherit" />
+            ) : (
+              <ArrowForwardIcon />
+            )
+          }
+        >
+          {loading ? "Posting..." : "Post"}
         </Button>
       </Box>
     </Paper>
