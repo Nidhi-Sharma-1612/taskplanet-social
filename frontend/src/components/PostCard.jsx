@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
 import api from "../services/api";
 import { useAuth } from "../context/useAuth";
@@ -121,9 +122,13 @@ export default function PostCard({ post, onUpdate }) {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <Button variant="outlined" onClick={commentHandler}>
-          Send
-        </Button>
+        <IconButton
+          color="primary"
+          onClick={commentHandler}
+          disabled={!comment.trim()}
+        >
+          <SendIcon />
+        </IconButton>
       </Box>
     </Paper>
   );

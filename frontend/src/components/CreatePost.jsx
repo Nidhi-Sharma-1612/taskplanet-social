@@ -2,7 +2,7 @@ import { Box, Button, Paper, TextField, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import CloseIcon from "@mui/icons-material/Close";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import SendIcon from "@mui/icons-material/Send";
 import CircularProgress from "@mui/material/CircularProgress";
 import api from "../services/api";
 
@@ -130,7 +130,7 @@ export default function CreatePost({ onPostCreated }) {
             loading ? (
               <CircularProgress size={18} color="inherit" />
             ) : (
-              <ArrowForwardIcon />
+              <SendIcon />
             )
           }
         >
