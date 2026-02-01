@@ -89,8 +89,11 @@ export const commentOnPost = async (req, res) => {
     }
 
     post.comments.push({
+      user: req.user._id,
       username: req.user.username,
-      text,
+      email: req.user.email,
+      avatar: req.user.avatar,
+      text: req.body.text,
     });
 
     await post.save();
