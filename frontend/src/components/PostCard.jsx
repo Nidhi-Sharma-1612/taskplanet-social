@@ -85,9 +85,31 @@ export default function PostCard({ post, onUpdate }) {
 
       {/* Comments */}
       {post.comments.map((c) => (
-        <Typography key={c._id} variant="body2" sx={{ mt: 1 }}>
-          <b>{c.username}:</b> {c.text}
-        </Typography>
+        <Box
+          key={c._id}
+          display="flex"
+          gap={1.5}
+          mt={1.5}
+          alignItems="flex-start"
+        >
+          <Avatar src={c.avatar} sx={{ width: 32, height: 32 }}>
+            {!c.avatar && c.username[0].toUpperCase()}
+          </Avatar>
+
+          <Box>
+            <Typography variant="body2" fontWeight="bold">
+              {c.username}
+            </Typography>
+
+            <Typography variant="caption" color="text.secondary">
+              {c.email} • {dayjs(c.createdAt).fromNow()}
+            </Typography>
+
+            <Typography variant="body2" sx={{ mt: 0.5 }}>
+              {c.text}
+            </Typography>
+          </Box>
+        </Box>
       ))}
 
       {/* Add Comment */}
