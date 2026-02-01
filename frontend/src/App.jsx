@@ -3,13 +3,21 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Feed from "./pages/Feed";
 import { useAuth } from "./context/useAuth";
+import { Box, CircularProgress } from "@mui/material";
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", marginTop: "2rem" }}>Loading...</div>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
     );
   }
 
