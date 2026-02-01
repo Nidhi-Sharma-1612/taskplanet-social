@@ -1,8 +1,12 @@
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, Typography } from "@mui/material";
 import PublicIcon from "@mui/icons-material/Public";
 import LogoutIcon from "@mui/icons-material/Logout";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
 import api from "../services/api";
 import { useAuth } from "../context/useAuth";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +14,17 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   const logoutHandler = async () => {
     await api.post("/auth/logout");
@@ -18,7 +33,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky" sx={{ top: 0, zIndex: 1100 }}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         {/* Left: App icon + title */}
         <Box display="flex" alignItems="center" gap={1}>
@@ -26,11 +41,33 @@ export default function Header() {
           <Typography variant="h6">TaskPlanet Social</Typography>
         </Box>
 
-        {/* Right: Logout */}
+        {/* Right: Avatar + Menu */}
         {user && (
-          <IconButton color="inherit" onClick={logoutHandler}>
-            <LogoutIcon />
-          </IconButton>
+          <>
+            <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
+              <Avatar src={user.avatar}>
+                {!user.avatar && user.username[0].toUpperCase()}
+              </Avatar>
+            </IconButton>
+
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuClose}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <MenuItem
+                onClick={async () => {
+                  await logoutHandler();
+                  handleMenuClose();
+                }}
+              >
+                <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
+                Logout
+              </MenuItem>
+            </Menu>
+          </>
         )}
       </Toolbar>
     </AppBar>
