@@ -62,6 +62,8 @@ export default function CreatePost({ onPostCreated }) {
     };
   }, [imagePreview]);
 
+  const isPostDisabled = loading || (!text.trim() && !imageFile);
+
   return (
     <Paper sx={{ p: 2 }}>
       <TextField
@@ -123,7 +125,7 @@ export default function CreatePost({ onPostCreated }) {
         <Button
           variant="contained"
           onClick={submitHandler}
-          disabled={loading}
+          disabled={isPostDisabled}
           endIcon={
             loading ? (
               <CircularProgress size={18} color="inherit" />
